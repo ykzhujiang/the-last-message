@@ -49,6 +49,20 @@ body {
 }
 .trust-banner em { font-style: normal; color: #c4a97d; }
 
+/* Story Illustrations */
+.story-illustration {
+  margin: 16px auto 24px;
+  max-width: 480px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.story-illustration img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* Screen system */
 .screen {
   display: none;
@@ -472,6 +486,20 @@ const story = {
   }
 };
 
+// ===== IMAGE MAP =====
+const nodeImages = {
+  "start": "images/01-intro-phone-notification.png",
+  "read_message": "images/03-path-a-reading.png",
+  "pretend": "images/04-path-b-walking-away.png",
+  "screenshot": "images/02-choice-dilemma.png",
+  "confront_love": "images/05-confrontation.png",
+  "call_margaret": "images/05-confrontation.png",
+  "ask_at_dinner": "images/05-confrontation.png",
+  "keep_waiting": "images/04-path-b-walking-away.png",
+  "call_m": "images/06-ending-trust.png",
+  "follow_wed": "images/07-ending-leave.png"
+};
+
 // ===== ENGINE =====
 let currentNode = null;
 let choicesMade = [];
@@ -493,6 +521,9 @@ function showNode(nodeId) {
   // Build screen
   let html = `<div class="screen active fade-in" id="screen-${nodeId}">`;
   html += `<div class="chapter-label">${node.chapter}</div>`;
+  if (nodeImages[nodeId]) {
+    html += `<div class="story-illustration"><img src="${nodeImages[nodeId]}" alt="" loading="lazy"></div>`;
+  }
   html += `<div class="story-text">${node.text}</div>`;
 
   if (node.ending) {
