@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ykzhujiang.github.io/the-last-message/sitemap.xml
