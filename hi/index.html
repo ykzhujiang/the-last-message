@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>आखिरी संदेश — एक इंटरैक्टिव कहानी</title>
+
+<!-- hreflang -->
+<link rel="alternate" hreflang="en" href="https://ykzhujiang.github.io/the-last-message/">
+<link rel="alternate" hreflang="hi" href="https://ykzhujiang.github.io/the-last-message/hi/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="आखिरी संदेश — अगर आपके पति के फोन में एक राज़ मिले तो?">
+<meta property="og:description" content="एक इंटरैक्टिव प्रेम कहानी। आपके फैसले अंत तय करेंगे। बिल्कुल मुफ़्त।">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://ykzhujiang.github.io/the-last-message/images/01-intro-phone-notification.png">
+<meta property="og:url" content="https://ykzhujiang.github.io/the-last-message/hi/">
+
+<!-- SEO Meta -->
+<meta name="description" content="एक इंटरैक्टिव प्रेम कहानी जहाँ आपके फैसले अंत तय करते हैं। पति के फोन में छुपा एक राज़ — आप क्या करेंगी? मुफ़्त, बिना साइन-अप, बिना विज्ञापन।">
+<meta name="keywords" content="इंटरैक्टिव कहानी, प्रेम कहानी, शॉर्ट ड्रामा, हिंदी कहानी, मुफ़्त कहानी, रोमांस">
+<link rel="canonical" href="https://ykzhujiang.github.io/the-last-message/hi/">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "आखिरी संदेश",
+  "description": "एक इंटरैक्टिव प्रेम कहानी जहाँ आपके फैसले अंत तय करते हैं।",
+  "url": "https://ykzhujiang.github.io/the-last-message/hi/",
+  "applicationCategory": "Entertainment",
+  "operatingSystem": "Web",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+  "genre": ["Interactive Fiction", "Romance", "Drama"],
+  "inLanguage": "hi"
+}
+</script>
+
+<!-- Plausible Analytics -->
+<script defer data-domain="ykzhujiang.github.io" src="https://plausible.io/js/script.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Noto Sans Devanagari", "Mangal", Georgia, serif;
+  background: #0d0d0d;
+  color: #e8e0d8;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.trust-banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(13,13,13,0.95);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 11px;
+  color: #8a8a7a;
+  letter-spacing: 1px;
+  z-index: 100;
+  border-bottom: 1px solid #1a1a1a;
+}
+.trust-banner em { font-style: normal; color: #c4a97d; }
+.story-illustration {
+  margin: 16px auto 24px;
+  max-width: 480px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.story-illustration img { width: 100%; height: auto; display: block; }
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 60px 24px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+.screen.active { display: flex; }
+.title-screen {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.title-screen h1 {
+  font-size: 36px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.title-screen .subtitle {
+  font-size: 16px;
+  color: #8a8a7a;
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+.title-screen .genre-tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c4a97d;
+  margin-bottom: 16px;
+}
+.begin-btn {
+  background: none;
+  border: 1px solid #c4a97d;
+  color: #c4a97d;
+  padding: 14px 48px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+.begin-btn:hover { background: #c4a97d; color: #0d0d0d; }
+.story-screen { justify-content: flex-start; padding-top: 72px; }
+.chapter-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #c4a97d;
+  margin-bottom: 24px;
+}
+.story-text {
+  font-size: 18px;
+  line-height: 2;
+  color: #d4cdc4;
+  margin-bottom: 32px;
+}
+.story-text p { margin-bottom: 16px; }
+.story-text .dialogue {
+  color: #fff;
+  font-style: italic;
+  padding-left: 16px;
+  border-left: 2px solid #c4a97d33;
+  margin: 20px 0;
+}
+.story-text .inner-thought { color: #8a8a7a; font-style: italic; }
+.choices { margin-top: 16px; }
+.choices .prompt {
+  font-size: 14px;
+  color: #8a8a7a;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.choice-btn {
+  display: block;
+  width: 100%;
+  background: rgba(196,169,125,0.05);
+  border: 1px solid #c4a97d33;
+  color: #d4cdc4;
+  padding: 16px 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+.choice-btn:hover {
+  background: rgba(196,169,125,0.12);
+  border-color: #c4a97d;
+  color: #fff;
+}
+.choice-btn .choice-label {
+  font-size: 11px;
+  color: #c4a97d;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 4px;
+}
+.progress-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: #1a1a1a;
+  z-index: 100;
+}
+.progress-fill { height: 100%; background: #c4a97d; transition: width 0.6s ease; }
+.ending-count { font-size: 12px; color: #555; margin-bottom: 16px; }
+.share-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.share-btn {
+  background: none;
+  border: 1px solid #333;
+  color: #8a8a7a;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  border-radius: 4px;
+}
+.share-btn:hover { border-color: #c4a97d; color: #c4a97d; }
+.fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
+@keyframes fadeIn { to { opacity: 1; } }
+.lang-switch {
+  position: fixed; top: 36px; right: 16px;
+  font-size: 12px; z-index: 101;
+}
+.lang-switch a { color: #8a8a7a; text-decoration: none; }
+.lang-switch a:hover { color: #c4a97d; }
+</style>
+</head>
+<body>
+
+<div class="trust-banner">
+  <em>हमेशा मुफ़्त</em> · कोई सिक्के नहीं · कोई चालबाज़ी नहीं · आपकी कहानी, आपके फैसले
+</div>
+<div class="lang-switch"><a href="../">English</a></div>
+
+<!-- TITLE SCREEN -->
+<div class="screen title-screen active" id="screen-title">
+  <div class="genre-tag">इंटरैक्टिव प्रेम कहानी · ~5 मिनट</div>
+  <h1>आखिरी संदेश</h1>
+  <div class="subtitle">
+    आपके पति के फोन में एक अनभेजा संदेश मिलता है।<br>
+    तीन शब्द जो सब कुछ बदल देते हैं।<br><br>
+    <em>आपके फैसले तय करेंगे कि कहानी कैसे ख़त्म होगी।</em>
+  </div>
+  <button class="begin-btn" onclick="startStory()">शुरू करें</button>
+</div>
+
+<div id="story-container"></div>
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<script>
+const story = {
+  "start": {
+    chapter: "अध्याय एक",
+    text: `<p>तीन दिन से बारिश थमी नहीं है।</p>
+<p>आप बेडरूम में कपड़े तह कर रही हैं जब अर्जुन का फोन साइड टेबल पर बज उठता है। वो नीचे किचन में खाना बना रहे हैं — आप सुन सकती हैं कि वो वही पुराना गाना गुनगुना रहे हैं जो हमेशा दाल बनाते वक़्त गाते हैं।</p>
+<p>स्क्रीन जगमगा उठती है। एक नोटिफ़िकेशन। आपका इरादा देखने का नहीं था, लेकिन प्रीव्यू आपकी नज़र पकड़ लेता है:</p>
+<div class="dialogue">"मुझे उसे बताना होगा। मैं ये राज़ और नहीं रख सकता—"</div>
+<p>मैसेज अधूरा है। ड्राफ़्ट। अनभेजा। एक कॉन्टैक्ट को लिखा — सिर्फ़ <strong>"म"</strong> नाम से सेव।</p>
+<p class="inner-thought">आपकी धड़कन रुक जाती है। फिर तेज़ हो जाती है। आपके हाथों में अभी भी उनका पसंदीदा ग्रे स्वेटर है।</p>
+<p>नीचे से अर्जुन की आवाज़ आती है:</p>
+<div class="dialogue">"खाना लगभग तैयार है, जान! बस दस मिनट!"</div>`,
+    choices: [
+      { label: "क", text: "पूरा मैसेज पढ़ो। तुम्हें सच जानना होगा।", next: "read_message" },
+      { label: "ख", text: "फोन रख दो। खाने पर जाओ। ऐसे करो जैसे कुछ देखा ही नहीं।", next: "pretend" },
+      { label: "ग", text: "स्क्रीनशॉट लो, अपने फोन पर भेजो। फिर वापस रख दो।", next: "screenshot" }
+    ],
+    progress: 15
+  },
+
+  "read_message": {
+    chapter: "अध्याय दो — ड्राफ़्ट का सच",
+    text: `<p>आपकी उँगलियाँ काँप रही हैं जब आप ड्राफ़्ट फ़ोल्डर खोलती हैं। पूरा मैसेज पढ़ती हैं:</p>
+<div class="dialogue">"म — मुझे उसे बताना होगा। मैं ये राज़ प्रिया से और नहीं रख सकता। डॉक्टर ने कहा 6 महीने, शायद 8। मैं नहीं चाहता कि वो जो भी वक़्त बचा है वो डर में गुज़ारे। लेकिन मुझे शब्द नहीं मिल रहे। तुम उस इंसान को कैसे बताओगे जिससे सबसे ज़्यादा प्यार करते हो कि तुम जा रहे हो?"</div>
+<p>फोन आपके हाथ से फिसलने लगता है।</p>
+<p>आप ऊपर स्क्रॉल करती हैं। और भी ड्राफ़्ट हैं। दर्जनों। हफ़्तों पुराने।</p>
+<div class="dialogue">"सिरदर्द और बढ़ रहा है। प्रिया को बोला टेंशन है।"</div>
+<div class="dialogue">"म कहती है बता दो। वो सही कहती है। लेकिन जब भी प्रिया को हँसते देखता हूँ, हिम्मत नहीं होती।"</div>
+<p class="inner-thought">म — मीरा दीदी। अर्जुन की बड़ी बहन। जो पुणे में रहती हैं और हर रविवार फोन करती हैं।</p>
+<p>कमरा घूमने लगता है। आप बिस्तर के किनारे बैठ जाती हैं, ग्रे स्वेटर अभी भी हाथ में। नीचे, वो गुनगुना रहे हैं। <em>गुनगुना</em> रहे हैं।</p>`,
+    choices: [
+      { label: "क", text: "अभी नीचे जाओ और बताओ कि तुम जानती हो।", next: "confront_love" },
+      { label: "ख", text: "पहले मीरा दीदी को फोन करो। सामना करने से पहले पूरी तस्वीर समझो।", next: "call_margaret" }
+    ],
+    progress: 35
+  },
+
+  "pretend": {
+    chapter: "अध्याय दो — दाल और ख़ामोशी",
+    text: `<p>आप स्वेटर तह करती हैं। दराज़ में रखती हैं। नीचे चली जाती हैं।</p>
+<p>अर्जुन ने टेबल सजाई है — वो ख़ास बर्तन जो शादी में मिले थे। मोमबत्तियाँ जल रही हैं। शराब नहीं, चाय — वो जानते हैं आपको रात को चाय पसंद है।</p>
+<div class="dialogue">"आज तेरी पसंद की दाल-चावल बनाए। बैठ ना।" वो मुस्कुराते हैं।</div>
+<p>आप बैठती हैं। खाती हैं। बारिश की, पड़ोसियों के नए कुत्ते की, किचन की रंगाई की बात करती हैं। सामान्य बातें। सुरक्षित बातें।</p>
+<p>लेकिन उस मैसेज के शब्द आपके सीने में अंगारे की तरह जल रहे हैं।</p>
+<p class="inner-thought">मुझे उसे बताना होगा। मैं ये राज़ और नहीं रख सकता—</p>
+<p>क्या नहीं रख सकते? कौन है म?</p>
+<p>वो टेबल के पार आपका हाथ पकड़ लेते हैं।</p>
+<div class="dialogue">"प्रिया? ठीक हो? कहीं दूर लग रही हो।"</div>`,
+    choices: [
+      { label: "क", text: "\"म कौन है, अर्जुन?\" — सीधे पूछो, यहीं अभी।", next: "ask_at_dinner" },
+      { label: "ख", text: "\"ठीक हूँ। बस थकान है।\" — चुप रहो। देखो। इंतज़ार करो।", next: "keep_waiting" }
+    ],
+    progress: 35
+  },
+
+  "screenshot": {
+    chapter: "अध्याय दो — सबूत",
+    text: `<p>आप स्क्रीनशॉट लेती हैं। अपने फोन पर भेजती हैं। उनके सेंट मैसेज से सबूत मिटाती हैं। फोन बिल्कुल वैसे ही रख देती हैं।</p>
+<p>खाने पर उनका चेहरा पढ़ती हैं। वो ऑफ़िस की मज़ेदार बात सुना रहे हैं। हँस रहे हैं। आप दरारें ढूँढ रही हैं — अपराधबोध, दूरी, जो भी छुपा रहे हैं।</p>
+<p>रात को, जब वो सो जाते हैं, आप अपने फोन पर स्क्रीनशॉट खोलकर उन शब्दों को घूरती हैं:</p>
+<div class="dialogue">"मुझे उसे बताना होगा। मैं ये राज़ और नहीं रख सकता—"</div>
+<p>आप उनका फोन ध्यान से खंगालती हैं। म — कोई सरनेम नहीं। कॉल हिस्ट्री में हफ़्ते में एक कॉल दिखती है, हमेशा बुधवार दोपहर को। जब आप काम पर होती हैं।</p>
+<p class="inner-thought">तीन महीने की बुधवार की कॉल्स। तीन महीने के राज़।</p>
+<p>म का एक और मैसेज मिलता है, दो हफ़्ते पुराना:</p>
+<div class="dialogue">"अर्जुन, तुझे प्रिया को बताना होगा। उसका हक़ है जानने का। बचाना बंद कर और भरोसा कर। — म"</div>`,
+    choices: [
+      { label: "क", text: "कल ख़ुद म को फोन करो। पता लगाओ ये कौन है।", next: "call_m" },
+      { label: "ख", text: "बुधवार का इंतज़ार करो। अर्जुन के पीछे जाओ। देखो वो सच में कहाँ जाते हैं।", next: "follow_wed" }
+    ],
+    progress: 35
+  },
+
+  "confront_love": {
+    chapter: "अध्याय तीन — किचन का इक़रार",
+    text: `<p>आप नीचे जाती हैं। वो दाल चला रहे हैं, पीठ आपकी तरफ़। वही गुनगुनाहट।</p>
+<p>आप उनका नाम लेती हैं और आपकी आवाज़ में कुछ ऐसा है कि वो तुरंत पलट जाते हैं।</p>
+<div class="dialogue">"मैंने तुम्हारा मैसेज पढ़ लिया, अर्जुन। मीरा दीदी को लिखा हुआ।"</div>
+<p>लकड़ी का चम्मच ज़मीन पर गिरता है। उनका चेहरा सफ़ेद पड़ जाता है, फिर टूट जाता है। वो इनकार नहीं करते। बहाना नहीं बनाते। बस खड़े रहते हैं, और फिर आँखों में आँसू आ जाते हैं।</p>
+<div class="dialogue">"मुझे समझ नहीं आ रहा था कैसे बताऊँ। हफ़्तों से शब्द ढूँढ रहा था।"</div>
+<p>वो सब बताते हैं। ब्रेन ट्यूमर। आख़िरी स्टेज। ऑपरेशन नहीं हो सकता। दो महीने से जानते हैं।</p>
+<p>आपको याद नहीं कब किचन पार किया। लेकिन अचानक आप उन्हें पकड़े हुई हैं, वो काँप रहे हैं, दाल जल रही है, और किसी को परवाह नहीं।</p>
+<div class="dialogue">"दोबारा कभी मुझसे ऐसी बात मत छुपाना," आप फुसफुसाती हैं। "जितना भी वक़्त है — साथ में गुज़ारेंगे।"</div>
+<p>वो आपके कंधे पर सिर हिलाते हैं। <em>"साथ में।"</em></p>`,
+    choices: [],
+    ending: { type: "अंत 1 / 4", title: "तूफ़ान में साथ", text: "आपने सच चुना। आपने साथ चुना। आने वाले महीने ज़िंदगी के सबसे मुश्किल होंगे — लेकिन एक भी पल दिखावे में नहीं बीतेगा। कुछ लोगों को दशकों मिलते हैं और वो दूरी में गँवा देते हैं। आपको छह महीने मिले और हर पल प्यार से भर दिया।" },
+    progress: 100
+  },
+
+  "call_margaret": {
+    chapter: "अध्याय तीन — दीदी की आवाज़",
+    text: `<p>आप बाथरूम में बंद होकर मीरा दीदी को कॉल करती हैं। दूसरी रिंग पर उठाती हैं।</p>
+<div class="dialogue">"प्रिया?" रुकती हैं। "उसने बता दिया?"</div>
+<div class="dialogue">"नहीं। मुझे एक मैसेज मिला। दीदी, क्या हो रहा है?"</div>
+<p>लंबी ख़ामोशी। फिर दीदी की आवाज़ टूट जाती है।</p>
+<div class="dialogue">"कैंसर है, प्रिया। उसने मुझसे वादा लिया था कि नहीं बताऊँगी। वो सही वक़्त ढूँढ रहा था। लेकिन ऐसी बात के लिए कोई सही वक़्त नहीं होता, है ना?"</div>
+<p>वो बताती हैं — डायग्नोसिस, पुणे के स्पेशलिस्ट जिनसे दिखवा रहे थे, इलाज के विकल्प। वो सारी बुधवार की कॉल्स।</p>
+<div class="dialogue">"वो तुम्हें बचाने की कोशिश कर रहा है। बस यही चाहता है।"</div>
+<p>आप फोन रखती हैं। मुँह धोती हैं। आईने में अपने आप को देखती हैं और फ़ैसला करती हैं: उसे अकेला ये बोझ नहीं उठाने दूँगी। एक दिन और नहीं।</p>
+<p>नीचे जाती हैं। वो चूल्हे से ऊपर देखते हैं और आपका चेहरा पढ़ लेते हैं।</p>
+<div class="dialogue">"दीदी ने फोन किया?"</div>
+<div class="dialogue">"नहीं। मैंने किया।" आप उनका हाथ पकड़ती हैं। "बैठो, अर्जुन। बात करनी है।"</div>`,
+    choices: [],
+    ending: { type: "अंत 2 / 4", title: "अब कोई बुधवार अकेला नहीं", text: "आपने सच को टुकड़ा-टुकड़ा जोड़ा, हिम्मत और प्यार से। जब राज़ खुला तो अर्जुन राहत से रो पड़े। दीदी उसी वीकेंड आ गईं। तीनों ने किचन में बैठकर एक प्लान बनाया — मरने का नहीं, बचे हुए वक़्त को जीने का। कॉल्स बुधवार से रोज़ हो गईं, और वो अब राज़ नहीं रहीं।" },
+    progress: 100
+  },
+
+  "ask_at_dinner": {
+    chapter: "अध्याय तीन — दाल-चावल पर सच",
+    text: `<p>उनका हाथ आपके हाथ पर ठहर जाता है।</p>
+<div class="dialogue">"म?"</div>
+<div class="dialogue">"तुम्हारे फोन की स्क्रीन जगी थी। एक ड्राफ़्ट मैसेज। किसी म को। किसी बात के बारे में जो मुझसे छुपा रहे हो।"</div>
+<p>वो धीरे-धीरे हाथ पीछे खींचते हैं। मोमबत्ती की लौ को बहुत देर घूरते रहते हैं। जब ऊपर देखते हैं, आँखों से आँसू बह रहे हैं।</p>
+<div class="dialogue">"दो महीने से बताने की कोशिश कर रहा हूँ।"</div>
+<p>वो सब बताते हैं, और खाना ठंडा होता जाता है। डायग्नोसिस। कितना वक़्त बचा है। दीदी की हफ़्ते की कॉल्स। सही पल ढूँढने की बेवकूफ़ी भरी कोशिश।</p>
+<div class="dialogue">"मैं सब बर्बाद नहीं करना चाहता था। तुम्हें कुछ और हफ़्ते देना चाहता था... ये।" वो मोमबत्तियों, चाय, शादी के बर्तनों की तरफ़ इशारा करते हैं। "बस सामान्य। बस हम।"</div>
+<p>आप उठती हैं, उनकी कुर्सी के पास जाती हैं, और उनकी गोद में बैठ जाती हैं — जैसे शादी से पहले बैठती थीं। उनका चेहरा अपने हाथों में लेती हैं।</p>
+<div class="dialogue">"बेवकूफ़। 'सामान्य हम' में मुश्किलें भी शामिल हैं। यही तो फेरों में बोला था।"</div>
+<p>वो आँसुओं में हँसते हैं। आप दोनों हँसते हैं।</p>`,
+    choices: [],
+    ending: { type: "अंत 3 / 4", title: "शादी के बर्तन", text: "आपने कठिन सवाल पूछा और सबसे कठिन जवाब पाया — लेकिन साथ में, प्यार से बने खाने पर। आने वाले महीनों में, हर रात शादी वाले बर्तनों में खाना खाया। क्योंकि किसलिए बचा कर रखें? अगर इस पल के लिए नहीं, तो किसके लिए?" },
+    progress: 100
+  },
+
+  "keep_waiting": {
+    chapter: "अध्याय तीन — ख़ामोशी का बोझ",
+    text: `<p>हफ़्ते गुज़रते हैं। आप देखती रहती हैं। इंतज़ार करती हैं। वो चीज़ें नोटिस करती हैं जो पहले कभी नहीं देखीं।</p>
+<p>वो गोलियाँ जो छुपकर खाते हैं। घटता वज़न। रात आठ बजे तक कितने थक जाते हैं। सोने से पहले आपको कुछ ज़्यादा कसकर पकड़ना — जैसे आपकी शक्ल याद कर रहे हों।</p>
+<p>एक रात तीन बजे नींद खुलती है और वो बिस्तर पर नहीं हैं। लिविंग रूम में अँधेरे में बैठे हैं, लैपटॉप पर शादी की फ़ोटो देख रहे हैं। कंधे काँप रहे हैं।</p>
+<p class="inner-thought">कब तक उन्हें अकेला ये बोझ उठाने दोगी?</p>
+<p>आप बग़ल में बैठ जाती हैं। कुछ नहीं बोलतीं। बस उनके कंधे पर सिर रख देती हैं और साथ में फ़ोटो देखती हैं। मंडप। हल्दी। वो भद्दा केक।</p>
+<p>बहुत देर की ख़ामोशी के बाद, वो फुसफुसाते हैं:</p>
+<div class="dialogue">"मैं बीमार हूँ, प्रिया। बहुत बीमार।"</div>
+<div class="dialogue">"मुझे पता है।" आपकी आवाज़ स्थिर है। "काफ़ी समय से पता है।"</div>
+<p>वो आपकी तरफ़ देखते हैं, और उनकी आँखों में जो राहत है वो इतनी गहरी है कि सहना मुश्किल है।</p>
+<div class="dialogue">"तुमने बताया क्यों नहीं?"</div>
+<div class="dialogue">"तुम्हारी हिम्मत का इंतज़ार कर रही थी।"</div>`,
+    choices: [],
+    ending: { type: "अंत 4 / 4", title: "रात के तीन बजे", text: "आपने इंतज़ार किया — कमज़ोरी से नहीं, धीरज से। उन्हें अपनी हिम्मत जुटाने का वक़्त दिया, और जब जुटाई, आप वहीं थीं। कुछ सच रात के तीन बजे आते हैं, अँधेरे में, पुरानी फ़ोटो देखते हुए। और कभी-कभी सबसे बहादुरी की बात बस यही होती है: मुझे पता है। मैं यहाँ हूँ।" },
+    progress: 100
+  },
+
+  "call_m": {
+    chapter: "अध्याय तीन — वो कॉल",
+    text: `<p>अगली सुबह, अर्जुन के ऑफ़िस जाने के बाद, आप म को डायल करती हैं।</p>
+<p>दो रिंग। एक औरत की गर्म, चिंतित आवाज़:</p>
+<div class="dialogue">"अर्जुन? सब ठीक—"</div>
+<div class="dialogue">"अर्जुन नहीं। प्रिया बोल रही हूँ।"</div>
+<p>साँस रुकती है। फिर:</p>
+<div class="dialogue">"अरे प्रिया! उसने बता दिया तुझे?"</div>
+<div class="dialogue">"किसी ने नहीं बताया। यही तो तकलीफ़ है।"</div>
+<p>मीरा दीदी। अर्जुन की बड़ी बहन जिनसे दिवाली के बाद नहीं मिली थीं। वो तुरंत रोने लगती हैं, और आँसुओं के बीच सच निकलता है: डायग्नोसिस, कितना वक़्त, पुणे के स्पेशलिस्ट, बुधवार की कॉल्स।</p>
+<div class="dialogue">"वो इस वीकेंड बताने वाला था। कसम खाती हूँ, मैं बहुत ज़ोर दे रही थी। बस... वो पहले कोई उम्मीद ढूँढना चाहता था। बुरी ख़बर के साथ कुछ अच्छा भी देना चाहता था।"</div>
+<p>शाम को जब अर्जुन घर आते हैं, आप किचन टेबल पर बैठी हैं — दो कप चाय, एक आपका, एक उनका।</p>
+<div class="dialogue">"आज मैंने दीदी से बात की।" आप कप उनकी तरफ़ बढ़ाती हैं। "बैठो, अर्जुन।"</div>
+<p>उनके चेहरे पर झटका, डर, और फिर — साफ़-साफ़ — <em>राहत</em>।</p>`,
+    choices: [],
+    ending: { type: "अंत 3 / 4", title: "दो कप चाय", text: "आपने जाँच की, लेकिन प्यार से — शक से नहीं। जब सच कुछ और ही निकला — धोखे से कहीं बड़ा और कहीं ज़्यादा दर्दनाक — आप तैयार थीं। चाय, स्थिर हाथ, और खुला दिल लेकर। दीदी ने बाद में अर्जुन से कहा: 'सही इंसान से शादी की तूने।' उन्हें पहले से पता था।" },
+    progress: 100
+  },
+
+  "follow_wed": {
+    chapter: "अध्याय तीन — बुधवार",
+    text: `<p>बुधवार आता है। ऑफ़िस में हाफ़ डे बोलती हैं। गली में कार खड़ी करके इंतज़ार करती हैं।</p>
+<p>2:15 पर अर्जुन निकलते हैं। आप दूरी बनाकर पीछा करती हैं — बेवकूफ़ और बीमार और डरी हुई महसूस करते हुए। वो शहर पार करते हैं। दुकानों के आगे, पार्क के आगे, हर जानी-पहचानी जगह के आगे।</p>
+<p>वो <strong>सिटी हॉस्पिटल</strong> की पार्किंग में गाड़ी रोकते हैं।</p>
+<p class="inner-thought">हॉस्पिटल।</p>
+<p>आप कार में बैठकर देखती हैं उन्हें अंदर जाते हुए। कैंसर विभाग। बोर्ड पार्किंग से दिखता है।</p>
+<p>आप अंदर नहीं जातीं। घर लौटती हैं। ड्राइववे में बीस मिनट बैठती हैं, और फिर वो काम करती हैं जो पापा के गुज़रने के बाद नहीं किया — अपनी सबसे अच्छी सहेली को फोन करके तब तक रोती हैं जब तक साँस नहीं आती।</p>
+<p>जब अर्जुन घर आते हैं, आप खाना बना रही हैं। माथे पर किस करते हैं, बोलते हैं "बोरिंग दोपहर, ऑफ़िस में काम था।" आप उन्हें देखती हैं — एक इंसान जो डरा हुआ है और बहादुर बनने की कोशिश कर रहा है — और आपका गुस्सा किसी बहुत बड़ी चीज़ में घुल जाता है।</p>
+<div class="dialogue">"अर्जुन।" आप चूल्हा बंद करती हैं। "आज मैं तुम्हारे पीछे गई थी।"</div>
+<p>उनका चेहरा ठहर जाता है।</p>
+<div class="dialogue">"मुझे हॉस्पिटल का पता है। कैंसर विभाग का पता है। और अब तुम मुझे बचाना बंद करो और अंदर आने दो।"</div>`,
+    choices: [],
+    ending: { type: "अंत 4 / 4", title: "पार्किंग लॉट", text: "आपने सबूतों का पीछा किया एक ऐसी जगह तक जिसकी उम्मीद नहीं थी: हॉस्पिटल, होटल नहीं। धोखा था — लेकिन भरोसे का, प्यार का नहीं। वो आपको उस चीज़ से बचा रहे थे जिसका सामना साथ करना था। जब आपने बताया कि जानती हो, दीवार गिरी नहीं — चकनाचूर हुई। और उसकी जगह: दो इंसानों का साथ, असंभव का सामना करते हुए।" },
+    progress: 100
+  }
+};
+
+const nodeImages = {
+  "start": "../images/01-intro-phone-notification.png",
+  "read_message": "../images/03-path-a-reading.png",
+  "pretend": "../images/04-path-b-walking-away.png",
+  "screenshot": "../images/02-choice-dilemma.png",
+  "confront_love": "../images/05-confrontation.png",
+  "call_margaret": "../images/05-confrontation.png",
+  "ask_at_dinner": "../images/05-confrontation.png",
+  "keep_waiting": "../images/04-path-b-walking-away.png",
+  "call_m": "../images/06-ending-trust.png",
+  "follow_wed": "../images/07-ending-leave.png"
+};
+
+let currentNode = null;
+let choicesMade = [];
+
+function startStory() {
+  document.getElementById('screen-title').classList.remove('active');
+  showNode('start');
+  plausible('story_start_hi');
+}
+
+function showNode(nodeId) {
+  currentNode = nodeId;
+  const node = story[nodeId];
+  const container = document.getElementById('story-container');
+  document.getElementById('progress').style.width = node.progress + '%';
+
+  let html = `<div class="screen active fade-in" id="screen-${nodeId}">`;
+  html += `<div class="chapter-label">${node.chapter}</div>`;
+  if (nodeImages[nodeId]) {
+    html += `<div class="story-illustration"><img src="${nodeImages[nodeId]}" alt="" loading="lazy"></div>`;
+  }
+  html += `<div class="story-text">${node.text}</div>`;
+
+  if (node.ending) {
+    html += `<div style="text-align:center; margin-top:32px;">`;
+    html += `<div class="ending-count">${node.ending.type}</div>`;
+    html += `<h2 style="font-size:24px;font-weight:400;color:#fff;margin-bottom:16px;">${node.ending.title}</h2>`;
+    html += `<p style="font-size:15px;line-height:2;color:#8a8a7a;max-width:440px;margin:0 auto 32px;">${node.ending.text}</p>`;
+    html += `<div class="share-row">`;
+    html += `<button class="share-btn" onclick="restart()">फिर से पढ़ें</button>`;
+    html += `<button class="share-btn" onclick="shareStory()">शेयर करें</button>`;
+    html += `</div>`;
+    html += `<div style="margin-top:24px;"><p style="font-size:12px;color:#555;">और कहानियाँ जल्द आ रही हैं।</p></div>`;
+    html += `<div style="margin-top:16px;"><a href="../" style="color:#8a8a7a;font-size:12px;text-decoration:none;">Read in English</a></div>`;
+    html += `</div>`;
+    plausible('story_end_hi', {props: {ending: node.ending.title}});
+  } else if (node.choices.length > 0) {
+    html += `<div class="choices">`;
+    html += `<div class="prompt">आप क्या करेंगी?</div>`;
+    node.choices.forEach(c => {
+      html += `<button class="choice-btn" onclick="makeChoice('${c.next}','${c.label}')">`;
+      html += `<span class="choice-label">${c.label}</span>`;
+      html += c.text;
+      html += `</button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function makeChoice(nextNode, label) {
+  choicesMade.push(label);
+  plausible('choice_hi', {props: {node: currentNode, choice: label}});
+  showNode(nextNode);
+}
+
+function restart() {
+  choicesMade = [];
+  document.getElementById('story-container').innerHTML = '';
+  document.getElementById('screen-title').classList.add('active');
+  document.getElementById('progress').style.width = '0%';
+  window.scrollTo({ top: 0 });
+}
+
+function shareStory() {
+  const text = "मैंने अभी 'आखिरी संदेश' खेली — प्यार, राज़ और मुश्किल फ़ैसलों की एक इंटरैक्टिव कहानी। आप भी खेलें:";
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'आखिरी संदेश', text, url });
+  } else {
+    navigator.clipboard.writeText(text + ' ' + url).then(() => alert('लिंक कॉपी हो गया!'));
+  }
+}
+</script>
+</body>
+</html>
