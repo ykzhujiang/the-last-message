@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Last Message — An Interactive Story</title>
+
+<!-- Open Graph -->
+<meta property="og:title" content="The Last Message — What would you do if you found a secret on your partner's phone?">
+<meta property="og:description" content="An interactive romance story. Your choices shape the ending. Always free. No tricks.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.png">
+<meta property="og:url" content="https://ykzhujiang.github.io/the-last-message/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Last Message — An Interactive Story">
+<meta name="twitter:description" content="Your choices shape the ending. Always free. No tricks.">
+<meta name="twitter:image" content="og-image.png">
+
+<!-- Plausible Analytics (privacy-first, no cookie banner needed) -->
+<script defer data-domain="ykzhujiang.github.io" src="https://plausible.io/js/script.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background: #0d0d0d;
+  color: #e8e0d8;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Trust Banner */
+.trust-banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(13,13,13,0.95);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 11px;
+  color: #8a8a7a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  z-index: 100;
+  border-bottom: 1px solid #1a1a1a;
+}
+.trust-banner em { font-style: normal; color: #c4a97d; }
+
+/* Screen system */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 60px 24px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+.screen.active { display: flex; }
+
+/* Title screen */
+.title-screen {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.title-screen h1 {
+  font-size: 36px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.title-screen .subtitle {
+  font-size: 16px;
+  color: #8a8a7a;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+.title-screen .genre-tag {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c4a97d;
+  margin-bottom: 16px;
+}
+.begin-btn {
+  background: none;
+  border: 1px solid #c4a97d;
+  color: #c4a97d;
+  padding: 14px 48px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+.begin-btn:hover {
+  background: #c4a97d;
+  color: #0d0d0d;
+}
+
+/* Story screen */
+.story-screen {
+  justify-content: flex-start;
+  padding-top: 72px;
+}
+.chapter-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c4a97d;
+  margin-bottom: 24px;
+}
+.story-text {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d4cdc4;
+  margin-bottom: 32px;
+}
+.story-text p { margin-bottom: 16px; }
+.story-text .dialogue {
+  color: #fff;
+  font-style: italic;
+  padding-left: 16px;
+  border-left: 2px solid #c4a97d33;
+  margin: 20px 0;
+}
+.story-text .inner-thought {
+  color: #8a8a7a;
+  font-style: italic;
+}
+
+/* Choice system */
+.choices {
+  margin-top: 16px;
+}
+.choices .prompt {
+  font-size: 13px;
+  color: #8a8a7a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.choice-btn {
+  display: block;
+  width: 100%;
+  background: rgba(196,169,125,0.05);
+  border: 1px solid #c4a97d33;
+  color: #d4cdc4;
+  padding: 16px 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+.choice-btn:hover {
+  background: rgba(196,169,125,0.12);
+  border-color: #c4a97d;
+  color: #fff;
+}
+.choice-btn .choice-label {
+  font-size: 11px;
+  color: #c4a97d;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Progress */
+.progress-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: #1a1a1a;
+  z-index: 100;
+}
+.progress-fill {
+  height: 100%;
+  background: #c4a97d;
+  transition: width 0.6s ease;
+}
+
+/* Ending screen */
+.ending-screen {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.ending-screen .ending-type {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c4a97d;
+  margin-bottom: 16px;
+}
+.ending-screen h2 {
+  font-size: 28px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 24px;
+}
+.ending-screen .ending-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #8a8a7a;
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+.ending-count {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 24px;
+}
+.share-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.share-btn {
+  background: none;
+  border: 1px solid #333;
+  color: #8a8a7a;
+  padding: 10px 24px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  border-radius: 4px;
+}
+.share-btn:hover { border-color: #c4a97d; color: #c4a97d; }
+
+/* Fade-in animation */
+.fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* Read time */
+.read-time {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+/* CTA */
+.next-story {
+  margin-top: 24px;
+}
+.next-story a {
+  color: #c4a97d;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="trust-banner">
+  <em>Always free</em> · No coins · No tricks · Your choices, your story
+</div>
+
+<!-- TITLE SCREEN -->
+<div class="screen title-screen active" id="screen-title">
+  <div class="genre-tag">Interactive Romance · ~5 min read</div>
+  <h1>The Last Message</h1>
+  <div class="subtitle">
+    You find an unsent message on your husband's phone.<br>
+    Three words that change everything.<br><br>
+    <em>Your choices shape how this ends.</em>
+  </div>
+  <button class="begin-btn" onclick="startStory()">Begin</button>
+</div>
+
+<!-- STORY SCREENS (generated by JS) -->
+<div id="story-container"></div>
+
+<!-- PROGRESS -->
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<script>
+// ===== STORY DATA =====
+const story = {
+  // Chapter 1: The Discovery
+  "start": {
+    chapter: "Chapter One",
+    text: `<p>The rain hasn't stopped for three days.</p>
+<p>You're folding laundry in the bedroom when Daniel's phone buzzes on the nightstand. He's downstairs making dinner — you can hear him humming that old song he always hums when he's cooking pasta.</p>
+<p>The screen lights up. A notification. You don't mean to look, but the preview catches your eye:</p>
+<div class="dialogue">"I need to tell her. I can't keep this from—"</div>
+<p>The message cuts off. It's a draft. Unsent. Written to a contact saved only as <strong>"M."</strong></p>
+<p class="inner-thought">Your heart stops. Then races. Your hands are still holding his favorite grey sweater.</p>
+<p>Downstairs, Daniel calls out:</p>
+<div class="dialogue">"Dinner's almost ready, babe! Ten minutes!"</div>`,
+    choices: [
+      { label: "A", text: "Read the full message. You need to know.", next: "read_message" },
+      { label: "B", text: "Put the phone down. Go to dinner. Pretend you saw nothing.", next: "pretend" },
+      { label: "C", text: "Take a screenshot and send it to yourself. Then put it back.", next: "screenshot" }
+    ],
+    progress: 15
+  },
+
+  // Branch A: Read the message
+  "read_message": {
+    chapter: "Chapter Two — The Truth in the Draft",
+    text: `<p>Your fingers are trembling as you open the drafts folder. The full message reads:</p>
+<div class="dialogue">"M — I need to tell her. I can't keep this from Sarah anymore. The doctor said 6 months, maybe 8. I don't want her to spend whatever time we have left being afraid. But I don't know how to say the words. How do you tell the person you love most that you're dying?"</div>
+<p>The phone nearly slips from your hand.</p>
+<p>You scroll up. There are more drafts. Dozens. Going back weeks.</p>
+<div class="dialogue">"The headaches are getting worse. Told Sarah it's stress."</div>
+<div class="dialogue">"M says I should tell her. She's right. But every time I look at Sarah laughing, I can't do it."</div>
+<p class="inner-thought">M is Margaret. His sister. The one who lives in Portland and calls every Sunday.</p>
+<p>The room tilts. You sit on the edge of the bed, still holding the grey sweater. Downstairs, he's humming. He's <em>humming</em>.</p>`,
+    choices: [
+      { label: "A", text: "Go downstairs right now and tell him you know.", next: "confront_love" },
+      { label: "B", text: "Call Margaret first. You need the full picture before you face him.", next: "call_margaret" }
+    ],
+    progress: 35
+  },
+
+  // Branch B: Pretend
+  "pretend": {
+    chapter: "Chapter Two — Pasta and Silence",
+    text: `<p>You fold the sweater. Place it in the drawer. Walk downstairs.</p>
+<p>Daniel has set the table — the good plates, the ones you bought together in Florence. There are candles. He's poured wine.</p>
+<div class="dialogue">"I made your favorite. Cacio e pepe." He grins. "Sit."</div>
+<p>You sit. You eat. You talk about the rain, about the neighbors' new dog, about whether to repaint the kitchen. Normal things. Safe things.</p>
+<p>But the words from that message burn in your chest like an ember.</p>
+<p class="inner-thought">I need to tell her. I can't keep this from—</p>
+<p>What can't he keep from you? Who is M?</p>
+<p>He reaches across the table and takes your hand.</p>
+<div class="dialogue">"Sarah? You okay? You seem far away."</div>`,
+    choices: [
+      { label: "A", text: "\"Who's M, Daniel?\" — Ask directly, right here.", next: "ask_at_dinner" },
+      { label: "B", text: "\"I'm fine. Just tired.\" — Keep pretending. Watch. Wait.", next: "keep_waiting" }
+    ],
+    progress: 35
+  },
+
+  // Branch C: Screenshot
+  "screenshot": {
+    chapter: "Chapter Two — Evidence",
+    text: `<p>You screenshot the message. Send it to yourself. Delete the evidence from his sent messages. Put the phone back exactly as it was.</p>
+<p>At dinner, you study his face. He's telling a story about a funny thing that happened at work. He's laughing. You're searching for cracks — for guilt, for distance, for whatever it is he's hiding.</p>
+<p>Later that night, after he falls asleep, you open the screenshot on your own phone and stare at those words:</p>
+<div class="dialogue">"I need to tell her. I can't keep this from—"</div>
+<p>You search his phone carefully. M is in his contacts — no last name. The call history shows weekly calls, always on Wednesday afternoons. When you're at work.</p>
+<p class="inner-thought">Three months of Wednesday calls. Three months of secrets.</p>
+<p>You find one more text from M, received two weeks ago:</p>
+<div class="dialogue">"Danny, you HAVE to tell Sarah. She deserves to know. Stop protecting her and start trusting her. — M"</div>`,
+    choices: [
+      { label: "A", text: "Call M yourself tomorrow. Confront whoever this is.", next: "call_m" },
+      { label: "B", text: "Wait for Wednesday. Follow Daniel. See where he really goes.", next: "follow_wed" }
+    ],
+    progress: 35
+  },
+
+  // ===== CHAPTER 3 NODES =====
+  "confront_love": {
+    chapter: "Chapter Three — The Kitchen Confession",
+    text: `<p>You walk downstairs. He's stirring the pasta, his back to you. That same soft hum.</p>
+<p>You say his name and something in your voice makes him turn around immediately.</p>
+<div class="dialogue">"I read your message, Daniel. The one to Margaret."</div>
+<p>The wooden spoon clatters to the floor. His face goes white, then crumbles. He doesn't deny it. He doesn't make excuses. He just stands there, and then his eyes fill with tears.</p>
+<div class="dialogue">"I didn't know how to tell you. I've been trying to find the words for weeks."</div>
+<p>He tells you everything. Glioblastoma. Stage 4. Inoperable. He's known for two months.</p>
+<p>You don't remember crossing the kitchen. But suddenly you're holding him, and he's shaking, and the pasta is burning, and neither of you cares.</p>
+<div class="dialogue">"Don't you ever keep something like this from me again," you whisper. "Whatever time we have — we face it together."</div>
+<p>He nods against your shoulder. <em>"Together."</em></p>`,
+    choices: [],
+    ending: { type: "Ending 1 of 4", title: "Together in the Storm", text: "You chose truth. You chose presence. The months ahead will be the hardest of your life — but you won't spend a single one of them pretending. Some people get decades and waste them on distance. You got six months and filled every minute with love." },
+    progress: 100
+  },
+
+  "call_margaret": {
+    chapter: "Chapter Three — The Sister's Voice",
+    text: `<p>You lock yourself in the bathroom and call Margaret. She picks up on the second ring.</p>
+<div class="dialogue">"Sarah?" A pause. "He told you."</div>
+<div class="dialogue">"No. I found a message. Margaret, what's happening?"</div>
+<p>A long silence. Then Margaret's voice breaks.</p>
+<div class="dialogue">"It's cancer, Sarah. He made me promise not to tell you. He wanted to find the right moment. But there's never a right moment for something like this, is there?"</div>
+<p>She tells you about the diagnosis, the specialist in Portland she's been helping him see, the treatment options they've explored. All those Wednesday calls.</p>
+<div class="dialogue">"He's been trying to protect you. That's all he's ever wanted to do."</div>
+<p>You hang up. You wash your face. You look at yourself in the mirror and you make a decision: you will not let him carry this alone. Not for one more day.</p>
+<p>You walk downstairs. He looks up from the stove and sees your face, and he <em>knows</em>.</p>
+<div class="dialogue">"Margaret called you, didn't she?"</div>
+<div class="dialogue">"No. I called her." You take his hand. "Sit down, Danny. We need to talk."</div>`,
+    choices: [],
+    ending: { type: "Ending 2 of 4", title: "No More Wednesdays Alone", text: "You gathered the truth piece by piece, with care and courage. Daniel cried with relief when the secret was finally out. Margaret flew in that weekend. The three of you sat in the kitchen and made a plan — not for dying, but for living whatever was left. The calls moved from Wednesdays to every day, and they stopped being secrets." },
+    progress: 100
+  },
+
+  "ask_at_dinner": {
+    chapter: "Chapter Three — Over Cacio e Pepe",
+    text: `<p>His hand freezes on yours.</p>
+<div class="dialogue">"M?"</div>
+<div class="dialogue">"I saw your phone light up. A draft message. To someone named M. About something you can't keep from me."</div>
+<p>He pulls his hand back slowly. He stares at the candle flame for a long time. When he looks up, there are tears running down his face.</p>
+<div class="dialogue">"I've been trying to tell you for two months."</div>
+<p>He tells you over a dinner that goes cold. The diagnosis. The prognosis. Margaret's weekly calls to check on him. His desperate, foolish attempt to find the perfect moment to break your heart.</p>
+<div class="dialogue">"I didn't want to ruin everything. I wanted to give you a few more weeks of... this." He gestures at the candles, the wine, the good plates from Florence. "Just normal. Just us."</div>
+<p>You get up, walk to his side of the table, and sit in his lap like you haven't done since you were dating. You hold his face in your hands.</p>
+<div class="dialogue">"You idiot. 'Normal us' includes the hard stuff. That's literally what the vows said."</div>
+<p>He laughs through tears. You both do.</p>`,
+    choices: [],
+    ending: { type: "Ending 3 of 4", title: "The Good Plates", text: "You asked the hard question and got the hardest answer — but you got it together, over a meal he made with love. In the months that followed, you ate every dinner on the good Florence plates. Because why save them? What were you saving them for, if not for this?" },
+    progress: 100
+  },
+
+  "keep_waiting": {
+    chapter: "Chapter Three — The Weight of Silence",
+    text: `<p>Weeks pass. You watch. You wait. You notice things you never noticed before.</p>
+<p>The pills he takes when he thinks you're not looking. The weight he's losing. How tired he is by 8 PM. The way he holds you a little tighter before bed, like he's memorizing the shape of you.</p>
+<p>One night you wake at 3 AM and he's not in bed. You find him in the living room, in the dark, looking at your wedding photos on his laptop. His shoulders are shaking.</p>
+<p class="inner-thought">How long were you going to let him carry this alone?</p>
+<p>You sit down beside him. You don't say anything. You just rest your head on his shoulder and look at the photos with him. Venice. The courthouse. That ridiculous cake.</p>
+<p>After a long silence, he whispers:</p>
+<div class="dialogue">"I'm sick, Sarah. I'm really sick."</div>
+<div class="dialogue">"I know." Your voice is steady. "I've known for a while."</div>
+<p>He turns to look at you, and the relief in his eyes is so vast it's almost unbearable.</p>
+<div class="dialogue">"Why didn't you say something?"</div>
+<div class="dialogue">"I was waiting for you to be ready."</div>`,
+    choices: [],
+    ending: { type: "Ending 4 of 4", title: "3 AM", text: "You waited — not out of cowardice, but out of patience. You gave him space to find his own courage, and when he finally did, you were right there. Some truths arrive at 3 AM, in the dark, looking at old photos. And sometimes the bravest thing you can do is simply say: I know. I'm here." },
+    progress: 100
+  },
+
+  "call_m": {
+    chapter: "Chapter Three — The Call",
+    text: `<p>The next morning, after Daniel leaves for work, you dial M.</p>
+<p>Two rings. A woman's voice, warm and worried:</p>
+<div class="dialogue">"Danny? Is everything—"</div>
+<div class="dialogue">"It's not Danny. It's Sarah."</div>
+<p>A sharp intake of breath. Then:</p>
+<div class="dialogue">"Oh, Sarah. Oh honey. He told you?"</div>
+<div class="dialogue">"No one told me anything. That's the problem."</div>
+<p>It's Margaret. His sister Margaret who you haven't seen since Thanksgiving. She starts crying almost immediately, and through the tears, the truth comes pouring out: the diagnosis, the prognosis, the Wednesday calls that were really consultations with specialists in Portland.</p>
+<div class="dialogue">"He was going to tell you this weekend. I swear to you, Sarah, I've been begging him to. He just... he wanted to have a plan first. Something hopeful to give you along with the bad news."</div>
+<p>When Daniel comes home that evening, you're sitting at the kitchen table with two cups of tea — one for you, one for him.</p>
+<div class="dialogue">"I talked to Margaret today." You push the cup toward him. "Sit down, Danny."</div>
+<p>His face cycles through shock, fear, and finally — unmistakably — <em>relief</em>.</p>`,
+    choices: [],
+    ending: { type: "Ending 3 of 4", title: "Two Cups of Tea", text: "You investigated, but with love — not suspicion. When the truth turned out to be something far worse and far more tender than betrayal, you were ready. You met it with tea, steady hands, and an open heart. Margaret later told Daniel: 'You married the right one.' He already knew." },
+    progress: 100
+  },
+
+  "follow_wed": {
+    chapter: "Chapter Three — Wednesday",
+    text: `<p>Wednesday comes. You tell work you're taking a half day. You park down the street and wait.</p>
+<p>At 2:15, Daniel pulls out of the driveway. You follow at a distance, feeling ridiculous and sick and scared all at once. He drives across town. Past the shops, past the park, past everything familiar.</p>
+<p>He pulls into the parking lot of <strong>St. Mary's Medical Center</strong>.</p>
+<p class="inner-thought">A hospital.</p>
+<p>You sit in your car and watch him walk inside. Oncology wing. The sign is visible from the lot.</p>
+<p>You don't follow him in. You drive home. You sit in the driveway for twenty minutes, and then you do something you haven't done since your father died: you call your best friend and cry until you can't breathe.</p>
+<p>When Daniel comes home, you're making dinner. He kisses your forehead, says he had a "boring afternoon at the office." You look at him and see a man who is terrified and trying to be brave, and your anger dissolves into something much bigger.</p>
+<div class="dialogue">"Daniel." You turn off the stove. "I followed you today."</div>
+<p>His face goes still.</p>
+<div class="dialogue">"I know about the hospital. I know about the oncology wing. And I need you to stop protecting me and start letting me in."</div>`,
+    choices: [],
+    ending: { type: "Ending 4 of 4", title: "The Parking Lot", text: "You followed the evidence to a place you never expected: a hospital, not a hotel. The betrayal was real — but it was a betrayal of trust, not of love. He'd been protecting you from the one thing you needed to face together. When you told him you knew, the wall between you didn't just come down. It shattered. And in its place: the terrifying, beautiful openness of two people facing the unthinkable, side by side." },
+    progress: 100
+  }
+};
+
+// ===== ENGINE =====
+let currentNode = null;
+let choicesMade = [];
+
+function startStory() {
+  document.getElementById('screen-title').classList.remove('active');
+  showNode('start');
+  gtag('event', 'story_start', { story: 'the_last_message' });
+}
+
+function showNode(nodeId) {
+  currentNode = nodeId;
+  const node = story[nodeId];
+  const container = document.getElementById('story-container');
+
+  // Update progress
+  document.getElementById('progress').style.width = node.progress + '%';
+
+  // Build screen
+  let html = `<div class="screen active fade-in" id="screen-${nodeId}">`;
+  html += `<div class="chapter-label">${node.chapter}</div>`;
+  html += `<div class="story-text">${node.text}</div>`;
+
+  if (node.ending) {
+    // Ending screen
+    html += `<div style="text-align:center; margin-top:32px;">`;
+    html += `<div class="ending-count">${node.ending.type}</div>`;
+    html += `<h2 style="font-size:24px;font-weight:400;color:#fff;margin-bottom:16px;">${node.ending.title}</h2>`;
+    html += `<p style="font-size:15px;line-height:1.8;color:#8a8a7a;max-width:440px;margin:0 auto 32px;">${node.ending.text}</p>`;
+    html += `<div class="share-row">`;
+    html += `<button class="share-btn" onclick="restart()">Read Again</button>`;
+    html += `<button class="share-btn" onclick="shareStory()">Share</button>`;
+    html += `</div>`;
+    html += `<div class="next-story" style="margin-top:24px;"><p style="font-size:12px;color:#555;">More stories coming soon.</p></div>`;
+    html += `</div>`;
+    gtag('event', 'story_end', { story: 'the_last_message', ending: node.ending.title, choices: choicesMade.join(',') });
+  } else if (node.choices.length > 0) {
+    html += `<div class="choices">`;
+    html += `<div class="prompt">What do you do?</div>`;
+    node.choices.forEach(c => {
+      html += `<button class="choice-btn" onclick="makeChoice('${c.next}','${c.label}')">`;
+      html += `<span class="choice-label">${c.label}</span>`;
+      html += c.text;
+      html += `</button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function makeChoice(nextNode, label) {
+  choicesMade.push(label);
+  gtag('event', 'choice_made', { story: 'the_last_message', node: currentNode, choice: label, choice_number: choicesMade.length });
+  showNode(nextNode);
+}
+
+function restart() {
+  choicesMade = [];
+  document.getElementById('story-container').innerHTML = '';
+  document.getElementById('screen-title').classList.add('active');
+  document.getElementById('progress').style.width = '0%';
+  window.scrollTo({ top: 0 });
+  gtag('event', 'story_restart', { story: 'the_last_message' });
+}
+
+function shareStory() {
+  const text = "I just played 'The Last Message' — an interactive story about love, secrets, and impossible choices. Try it:";
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'The Last Message', text, url });
+  } else {
+    navigator.clipboard.writeText(text + ' ' + url).then(() => {
+      alert('Link copied!');
+    });
+  }
+  gtag('event', 'share', { story: 'the_last_message', ending: story[currentNode]?.ending?.title });
+}
+</script>
+</body>
+</html>
